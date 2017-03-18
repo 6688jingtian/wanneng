@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>多种运动组合最终版</title>
+		<style>
+			div{width: 200px; height: 200px; float: left; background: yellow; margin: 10px;
+			border: 5px solid; font-size: 14px; filter: alpha(opacity:70); opacity: 0.7;}
+		</style>
+	</head>
+	<body>
+		<div id="div1"></div>
+		<div id="div2"></div>
+		<div id="div3">Hello!world</div>
+		<div id="div4"></div>
+		<div id="div5"></div>
+		<script>
+		    var timer=null;
+			var oDiv1=document.getElementById('div1');
+			var oDiv2=document.getElementById('div2');
+			var oDiv3=document.getElementById('div3');
+			var oDiv4=document.getElementById('div4');
+			var oDiv5=document.getElementById('div5');
+			function getstyle(obj,name)
+			{
+				if(obj.currentStyle)
+				{
+					return obj.currentStyle[name];
+				}
+				else
+				{
+					return getComputedStyle(obj,false)[name];
+				}
+			}
+			function move(obj,target,strr)
+			{
+				clearInterval(obj.timer);
+				obj.timer=setInterval(function()
+				{
+				   if(strr=='opacity')
+				   {
+				   	  var cur=Math.round(parseFloat(getstyle(obj,strr))*100);
+				   }
+				   else
+				   {
+				   	   var cur=parseInt(getstyle(obj,strr));
+				   }
+				   var speed=(target-cur)/10;
+				   speed=speed>0?Math.ceil(speed):Math.floor(speed);
+				   if(cur==target)
+				   {
+				   	  clearInterval(obj.timer);
+				   }
+				   else
+				   {
+				   	  if(strr=='opacity')
+				   	  {
+				   	  	obj.style.filter='alpha(opacity:'+(cur+speed+')') ;
+				   	  	obj.style.opacity=(cur+speed)/100;
+				   	  }
+				   	  else
+				   	  {
+				   	  	obj.style[strr]=cur+speed+'px';
+				   	  }
+				      
+				   }
+				},30);
+			};
+			oDiv1.onmouseover=function()
+			{
+				move(this,600,'width');
+			}
+			oDiv1.onmouseout=function()
+			{
+				move(this,200,'width');
+			}
+			oDiv2.onmouseover=function()
+			{
+				move(this,600,'height');
+			}
+			oDiv2.onmouseout=function()
+			{
+				move(this,200,'height');
+			}
+			oDiv3.onmouseover=function()
+			{
+				move(this,50,'font-size');
+			}
+			oDiv3.onmouseout=function()
+			{
+				move(this,14,'font-size');
+			}
+			oDiv4.onmouseover=function()
+			{
+				move(this,100,'border-width');
+			}
+			oDiv4.onmouseout=function()
+			{
+				move(this,5,'border-width');
+			}
+			oDiv5.onmouseover=function()
+			{
+				move(this,100,'opacity');
+			}
+			oDiv5.onmouseout=function()
+			{
+				move(this,70,'opacity');
+			}
+		</script>
+	</body>
+</html>
